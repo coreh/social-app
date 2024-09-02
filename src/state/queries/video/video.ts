@@ -7,7 +7,11 @@ import {QueryClient, useQuery, useQueryClient} from '@tanstack/react-query'
 
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
-import {ServerError, VideoTooLargeError} from 'lib/media/video/errors'
+import {
+  ServerError,
+  UploadLimitError,
+  VideoTooLargeError,
+} from 'lib/media/video/errors'
 import {CompressedVideo} from 'lib/media/video/types'
 import {useCompressVideoMutation} from 'state/queries/video/compress-video'
 import {useVideoAgent} from 'state/queries/video/util'
@@ -127,7 +131,7 @@ export function useUploadVideo({
       setJobId(response.jobId)
     },
     onError: e => {
-      if (e instanceof ServerError) {
+      if (e instanceof ServerError || e instanceof UploadLimitError) {
         dispatch({
           type: 'SetError',
           error: e.message,
