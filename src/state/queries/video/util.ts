@@ -1,13 +1,13 @@
 import {useMemo} from 'react'
 import {AtpAgent} from '@atproto/api'
 
-const UPLOAD_ENDPOINT = 'https://video.bsky.app/'
+import {VIDEO_SERVICE} from '#/lib/constants'
 
 export const createVideoEndpointUrl = (
   route: string,
   params?: Record<string, string>,
 ) => {
-  const url = new URL(`${UPLOAD_ENDPOINT}`)
+  const url = new URL(VIDEO_SERVICE)
   url.pathname = route
   if (params) {
     for (const key in params) {
@@ -20,7 +20,7 @@ export const createVideoEndpointUrl = (
 export function useVideoAgent() {
   return useMemo(() => {
     return new AtpAgent({
-      service: UPLOAD_ENDPOINT,
+      service: VIDEO_SERVICE,
     })
   }, [])
 }
