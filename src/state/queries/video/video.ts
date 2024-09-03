@@ -256,6 +256,7 @@ const useUploadStatusQuery = ({
   useEffect(() => {
     if (error) {
       onError(error)
+      setEnabled(false)
     }
   }, [error, onError])
 
